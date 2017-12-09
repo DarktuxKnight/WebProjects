@@ -1,0 +1,8 @@
+CREATE TABLE serverinfo(
+   id serial PRIMARY KEY NOTNULL,
+   name varchar,
+   domain varchar,
+   fqdn varchar,
+   site varchar,
+   ipaddress inet
+);
