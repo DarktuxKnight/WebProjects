@@ -1,11 +1,13 @@
 CREATE DATABASE testdb;
 
-CREATE TABLE serverlist(
+CREATE SCHEMA ServerSchema;
+
+CREATE TABLE ServerSchema.serverlist(
 servername varchar PRIMARY KEY NOT NULL,
 domain varchar
 );
 
-CREATE TABLE serverinfo(
+CREATE TABLE ServerSchema.serverinfo(
    id serial PRIMARY KEY NOTNULL,
    name varchar,
    domain varchar,
@@ -14,7 +16,9 @@ CREATE TABLE serverinfo(
    ipaddress inet
 );
 
-
-INSERT INTO serverinfo (name,domain,fqdn,site,ipaddress)
+INSERT INTO serverschema.serverinfo (name,domain,fqdn,site,ipaddress)
 VALUES ('server1','PROD','server1.local','Loc1','10.0.0.1');
 
+SELECT ID, name,domain,fqdn,site,ipaddress FROM serverschema.serverinfo;
+SELECT ID, name,domain,fqdn,site,ipaddress FROM serverschema.serverinfo WHERE name='server1';
+SELECT COUNT(*) AS "RECORDS" FROM serverschema.serverinfo;
