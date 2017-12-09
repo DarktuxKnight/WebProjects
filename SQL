@@ -52,3 +52,7 @@ SELECT name,lastreboot FROM serverschema.serverinfo GROUP BY name HAVING lastreb
 
 SELECT DISTINCT name FROM serverschema.serverinfo;
 
+SELECT name, lastreboot....
+FROM serverschema.serverinfo AS rebootneeded
+WHERE [lastrebeet > 30];
+
