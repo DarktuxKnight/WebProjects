@@ -1,3 +1,10 @@
+CREATE DATABASE testdb;
+
+CREATE TABLE serverlist(
+servername varchar PRIMARY KEY NOT NULL,
+domain varchar
+);
+
 CREATE TABLE serverinfo(
    id serial PRIMARY KEY NOTNULL,
    name varchar,
