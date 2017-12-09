@@ -22,3 +22,39 @@ VALUES ('server1','PROD','server1.local','Loc1','10.0.0.1');
 SELECT ID, name,domain,fqdn,site,ipaddress FROM serverschema.serverinfo;
 SELECT ID, name,domain,fqdn,site,ipaddress FROM serverschema.serverinfo WHERE name='server1';
 SELECT COUNT(*) AS "RECORDS" FROM serverschema.serverinfo;
+SELECT CURRENT_TIMESTAMP;
+SELECT * FROM serverschema.serverinfo WHERE lastreboot >= 30 AND cfree < 5;
+SELECT * FROM serverschema.serverinfo WHERE lastreboot >= 30 OR cfree < 5;
+SELECT * FROM serverschema.serverinfo WHERE status = 'stopped';
+
+UPDATE serverschema.serverinfo SET domain = "new' WHERE name = 'serverx';
+
+
+DELETE FROM serverschema.serverinfo WHERE name = 'serverx';
+
+SELECT FROM serverschema.serverinfo
+WHERE name LIKE 'serverx'
+
+SELECT * FROM serverschema.serverinfo LIMIT 10;
+
+SELECT * FROM serverschema.serverinfo ORDER BY lastreboot DESC;
+
+SELECT name,rebootedon(lastreboot) FROM serverschema.serverinfo GROUP BY NAME ORDER BY rebootedon DESC;
+
+SELECT column1, column2
+FROM table1, table2
+WHERE [ conditions ]
+GROUP BY column1, column2
+HAVING [ conditions ]
+ORDER BY column1, column2
+
+SELECT name,lastreboot FROM serverschema.serverinfo GROUP BY name HAVING lastreboot > 1;
+
+
+
+         
+         
+
+
+
+
