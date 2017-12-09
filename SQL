@@ -50,11 +50,5 @@ ORDER BY column1, column2
 
 SELECT name,lastreboot FROM serverschema.serverinfo GROUP BY name HAVING lastreboot > 1;
 
-
-
-         
-         
-
-
-
+SELECT DISTINCT name FROM serverschema.serverinfo;
 
