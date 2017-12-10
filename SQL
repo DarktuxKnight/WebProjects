@@ -129,5 +129,36 @@ FROM  serverschema.serverinfo;
 
 select * from server_reboots;
 
+Transactions examples
+
+BEGIN;
+DELETE FROM serverschema.serverinfo WHERE lastreboot = 45;
+ROLLBACK;
+BEGIN;
+DELETE FROM serverschema.serverinfo WHERE lastreboot = 45;
+COMMIT;
+
+Sub Queries
+
+SELECT * FROM serverschema.serverinfo WHERE ID IN (SELECT ID FROM serverschema.serverinfo WHERE lastreboot > 30);
+
+INSERT INTO serverschema.serverinfobk
+   SELECT * FROM serverschema.serverinfo
+   WHERE ID IN (SELECT ID
+      FROM serverschema.serverinfo);
+      
+Priveleges
+
+GRANT ALL ON serverschema.serverinfo TO user1;
+GRANT ALL ON server_reboots TO public;
+GRANT SELECT ON serverschema.serverinfo TO public;
+
+Temporal Commands
+
+SELECT CURRENT_TIME;
+SELECT CURRENT_DATE;
+SELECT CURRENT_TIMESTAMP;
+SELECT CURRENT_TIMESTAMP(2);
+SELECT LOCALTIMESTAMP;
 
 
