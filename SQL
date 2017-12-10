@@ -56,3 +56,7 @@ SELECT name, lastreboot....
 FROM serverschema.serverinfo AS rebootneeded
 WHERE [lastrebeet > 30];
 
+CREATE TRIGGER servertrigger AFTER INSERT ON serverschema.serverlist
+FOR EACH ROW EXECUTE PROCEDURE kickbackup();
+
+
