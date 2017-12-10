@@ -1,6 +1,11 @@
-CREATE DATABASE testdb;
 
+Create Database
+   CREATE DATABASE serverdata;
+   
+Create Schema
 CREATE SCHEMA ServerSchema;
+
+Create Tables
 
 CREATE TABLE ServerSchema.serverlist(
 servername varchar PRIMARY KEY NOT NULL,
@@ -16,44 +21,66 @@ CREATE TABLE ServerSchema.serverinfo(
    ipaddress inet
 );
 
+su - postgres
+psql
+\connect serverdata
+List Tables : \l
+Show Table details : \d serverschema.serverinfo
 
-ALTER TABLE ServerSchema.serverinfo ALTER COLUMN ipaddress TYPE varchar;
+Alter Tables
 
+ALTER TABLE ServerSchema.serverinfo ADD COLUMN lastreboot real;
 ALTER TABLE ServerSchema.serverinfo 
    ADD CONSTRAINT fk_servername
    FOREIGN KEY (name) 
    REFERENCES ServerSchema.serverlist(servername);
-
-
+ALTER TABLE ServerSchema.serverinfo ALTER COLUMN ipaddress TYPE varchar;
 ALTER TABLE ServerSchema.serverinfo ALTER COLUMN name TYPE varchar;
 
-INSERT INTO serverschema.serverlist(servername,domain) VALUES ('server1','PROD');
+Instert operation
 
-INSERT INTO serverschema.serverinfo (name,domain,fqdn,site,ipaddress)
-VALUES ('server1','PROD','server1.local','Loc1','10.0.0.1');
+INSERT INTO serverschema.serverlist(servername,domain) VALUES ('server1','PROD');
+INSERT INTO serverschema.serverinfo (name,domain,fqdn,site,ipaddress,lastreboot)
+VALUES ('server1','PROD','server1.local','Loc1','10.0.0.1',47);
+
+Select Operations
 
 SELECT ID, name,domain,fqdn,site,ipaddress FROM serverschema.serverinfo;
 SELECT ID, name,domain,fqdn,site,ipaddress FROM serverschema.serverinfo WHERE name='server1';
 SELECT COUNT(*) AS "RECORDS" FROM serverschema.serverinfo;
 SELECT CURRENT_TIMESTAMP;
+
+
+Update Operation
+
+UPDATE serverschema.serverinfo SET domain = "new' WHERE name = 'serverx';
+
+Delete Operation
+
+DELETE FROM serverschema.serverinfo WHERE name = 'serverx';
+
+Where Operation
+
 SELECT * FROM serverschema.serverinfo WHERE lastreboot >= 30 AND cfree < 5;
 SELECT * FROM serverschema.serverinfo WHERE lastreboot >= 30 OR cfree < 5;
 SELECT * FROM serverschema.serverinfo WHERE status = 'stopped';
 
-UPDATE serverschema.serverinfo SET domain = "new' WHERE name = 'serverx';
-
-
-DELETE FROM serverschema.serverinfo WHERE name = 'serverx';
+Like Operation
 
 SELECT FROM serverschema.serverinfo
 WHERE name LIKE 'serverx'
 
+Limit Operation
+
 SELECT * FROM serverschema.serverinfo LIMIT 10;
+
+Order by
 
 SELECT * FROM serverschema.serverinfo ORDER BY lastreboot DESC;
 
-SELECT name,rebootedon(lastreboot) FROM serverschema.serverinfo GROUP BY NAME ORDER BY rebootedon DESC;
+Group by
 
+SELECT name,rebootedon(lastreboot) FROM serverschema.serverinfo GROUP BY NAME ORDER BY rebootedon DESC;
 SELECT column1, column2
 FROM table1, table2
 WHERE [ conditions ]
@@ -61,19 +88,26 @@ GROUP BY column1, column2
 HAVING [ conditions ]
 ORDER BY column1, column2
 
+Having Operation
+
 SELECT name,lastreboot FROM serverschema.serverinfo GROUP BY name HAVING lastreboot > 1;
 
+Distinct Operation
+
 SELECT DISTINCT name FROM serverschema.serverinfo;
+
+Alias Operation
 
 SELECT name, lastreboot....
 FROM serverschema.serverinfo AS rebootneeded
 WHERE [lastrebeet > 30];
 
+Trigger Operation
+
 CREATE TRIGGER servertrigger AFTER INSERT ON serverschema.serverlist
 FOR EACH ROW EXECUTE PROCEDURE kickbackup();
 
-
-Sample function:
+Function
 
 CREATE OR REPLACE FUNCTION kickbackup() RETURNS TRIGGER AS $example_table$
    BEGIN
@@ -81,4 +115,19 @@ CREATE OR REPLACE FUNCTION kickbackup() RETURNS TRIGGER AS $example_table$
       RETURN NEW;
    END;
 $example_table$ LANGUAGE plpgsql;
+
+
+TRUNCATE TABLE : Removes all data leaves table structure.
+
+TRUNCATE TABLE serverschema.serverinfo;
+
+Creating and viewing Views
+
+CREATE VIEW Server_Reboots AS
+SELECT name,lastreboot
+FROM  serverschema.serverinfo;
+
+select * from server_reboots;
+
+
 
