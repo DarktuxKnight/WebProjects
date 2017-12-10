@@ -188,3 +188,12 @@ $badservers$ LANGUAGE plpgsql;
 
 select totalNonReboots();
 
+Random Functions
+
+COUNT
+MAX
+MIN
+AVG
+SUM
+
+
