@@ -28,6 +28,9 @@ psql
 List Tables : \l
 Show Table details : \d serverschema.serverinfo
 
+Cehck Priveleges : \dn+
+
+
 Alter Tables
 
 ALTER TABLE ServerSchema.serverinfo ADD COLUMN lastreboot real;
