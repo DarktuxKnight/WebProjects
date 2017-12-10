@@ -1,3 +1,4 @@
+URL : jdbc:postgresql://<IPAddress>:5432/serverdata
 
 Create Database
    CREATE DATABASE serverdata;
