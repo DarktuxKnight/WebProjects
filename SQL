@@ -161,4 +161,30 @@ SELECT CURRENT_TIMESTAMP;
 SELECT CURRENT_TIMESTAMP(2);
 SELECT LOCALTIMESTAMP;
 
+Functions(Stored Procedures): Can be written in SQL,C,python.
+
+CREATE OR REPLACE FUNCTION totalRecords()
+RETURNS integer AS $total$
+declare
+	total integer;
+BEGIN
+   SELECT count(*) into total FROM serverschema.serverinfo;
+   RETURN total;
+END;
+$total$ LANGUAGE plpgsql;
+
+select totalRecords();
+
+
+CREATE OR REPLACE FUNCTION totalNonReboots()
+RETURNS integer AS $badservers$
+declare
+	badservers integer;
+BEGIN
+   SELECT count(*) into badservers FROM serverschema.serverinfo WHERE lastreboot > 20;
+   RETURN badservers;
+END;
+$badservers$ LANGUAGE plpgsql;
+
+select totalNonReboots();
 
