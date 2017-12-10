@@ -16,6 +16,19 @@ CREATE TABLE ServerSchema.serverinfo(
    ipaddress inet
 );
 
+
+ALTER TABLE ServerSchema.serverinfo ALTER COLUMN ipaddress TYPE varchar;
+
+ALTER TABLE ServerSchema.serverinfo 
+   ADD CONSTRAINT fk_servername
+   FOREIGN KEY (name) 
+   REFERENCES ServerSchema.serverlist(servername);
+
+
+ALTER TABLE ServerSchema.serverinfo ALTER COLUMN name TYPE varchar;
+
+INSERT INTO serverschema.serverlist(servername,domain) VALUES ('server1','PROD');
+
 INSERT INTO serverschema.serverinfo (name,domain,fqdn,site,ipaddress)
 VALUES ('server1','PROD','server1.local','Loc1','10.0.0.1');
 
@@ -59,4 +72,13 @@ WHERE [lastrebeet > 30];
 CREATE TRIGGER servertrigger AFTER INSERT ON serverschema.serverlist
 FOR EACH ROW EXECUTE PROCEDURE kickbackup();
 
+
+Sample function:
+
+CREATE OR REPLACE FUNCTION kickbackup() RETURNS TRIGGER AS $example_table$
+   BEGIN
+      INSERT INTO AUDIT(EMP_ID, ENTRY_DATE) VALUES (new.ID, current_timestamp);
+      RETURN NEW;
+   END;
+$example_table$ LANGUAGE plpgsql;
 
